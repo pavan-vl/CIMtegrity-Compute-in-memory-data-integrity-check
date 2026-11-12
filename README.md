@@ -6,7 +6,7 @@ CIMtegrity is an ongoing project in which I am designing an 8T SRAM compute-in-m
 
 ## Goal
 
-Flipping a few chosen weight bits in memory can destroy a DNN's accuracy [9]. RADAR [8] defends against this by keeping a small checksum per weight group and checking it at run time, but the weights are read out of memory to be checked.
+Flipping a few chosen weight bits in memory can destroy a DNN's accuracy [2]. RADAR [1] defends against this by keeping a small checksum per weight group and checking it at run time, but the weights are read out of memory to be checked.
 
 I want to see whether this check can be done inside the memory array itself. In a CIM array, turning on several rows at once makes the read bitline voltage reflect how many stored bits are 1, the same operation used for multiply-accumulate. Taking that count modulo 4 gives a 2-bit signature, similar in size to RADAR's, without moving the weights out of the array. The last phase will compare the energy of this in-array check against reading the weights out to a digital checksum circuit.
 
@@ -34,7 +34,7 @@ Since AND, NOR and XOR of two bits depend only on how many of them are 1, the tw
 - count = 2 gives AND
 - count = 1 gives XOR, which needs one extra gate (OR · NAND)
 
-The 8T cell is used instead of 6T because its read port only uses the stored node as a transistor gate, so activating two rows at once cannot flip either cell. The cell topology is the standard 8T cell [1], and the multi-row read scheme follows [2] and [3].
+The 8T cell is used instead of 6T because its read port only uses the stored node as a transistor gate, so activating two rows at once cannot flip either cell. The cell topology is the standard 8T cell [3], and the multi-row read scheme follows [4] and [5].
 
 ### Results (TT, 27 °C, 1.8 V)
 
@@ -74,7 +74,7 @@ Process corners (the full logic unit):
 
 - My first netlist had the bodies of three nfets (both write access devices and the read access device) tied to their own sources instead of to ground. It simulated, but it is not buildable in sky130 and it hides the body effect. I caught it while checking the netlist line by line.
 - The precharge pfet was too weak at first and took 1.45 ns to restore the bitline. Widening it from 1 µm to 2 µm brought this down to 0.71 ns.
-- I originally planned to detect the levels with skewed inverters, as X-SRAM does [3]. With levels this close to VDD (about 1.6 V for the upper threshold), an inverter cannot be skewed far enough in sky130, so I switched to clocked StrongARM comparators [4, 5]. Because a StrongARM resets every cycle, I added an SR latch after each one, as in sense-amplifier flip-flops [6].
+- I originally planned to detect the levels with skewed inverters, as X-SRAM does [5]. With levels this close to VDD (about 1.6 V for the upper threshold), an inverter cannot be skewed far enough in sky130, so I switched to clocked StrongARM comparators [6, 7]. Because a StrongARM resets every cycle, I added an SR latch after each one, as in sense-amplifier flip-flops [8].
 - While re-running everything for this README, the two-row testbench gave levels that no longer matched my earlier run. The cause was the second cell's ground pin, which had been left on an unconnected net. Its read path had nothing to discharge into.
 
 ---
@@ -93,7 +93,7 @@ The 4×4 array is four of these columns sharing the same wordlines, so a single 
 
 Choosing the read window: with the 0.7 ns window from Phase 1, the levels bunched up near the bottom and count 4 fell to 0.39 V, which is too low for the nfet input pair of the comparator. Shortening the window to 0.45 ns gave five evenly spaced levels:
 
-| Count | RBL | Step | Base paper [2], 90 nm |
+| Count | RBL | Step | Base paper [4], 90 nm |
 |---|---|---|---|
 | 0 | 1.793 V | | 1.758 V |
 | 1 | 1.553 V | 240 mV | 1.528 V |
@@ -140,11 +140,11 @@ Single column, written and read with six patterns:
 |---|---|
 | 8T bitcell | pull-down 0.84 µm, pull-up 0.42 µm, write access 0.42 µm, read stack 0.42 µm, all L = 0.15 µm |
 | Precharge | pfet, W = 2 µm |
-| Bitline load | 200 fF (as in [2]) |
-| Comparator | StrongARM latch [4, 5], Razavi's Fig. 1(b); tail and input pair 2 µm, nfet latch 1 µm, pfet latch 2 µm, reset devices 0.42 µm |
+| Bitline load | 200 fF (as in [4]) |
+| Comparator | StrongARM latch [6, 7], Razavi's Fig. 1(b); tail and input pair 2 µm, nfet latch 1 µm, pfet latch 2 µm, reset devices 0.42 µm |
 | Output latch | two cross-coupled NAND2 gates |
 | Logic | NAND2 (0.84 / 0.84 µm) and inverter (0.84 / 0.42 µm) |
-| Encoder | thermometer to binary, as used in flash ADCs [7] |
+| Encoder | thermometer to binary, as used in flash ADCs [9] |
 
 Drivers and reference voltages are ideal sources, and everything is at schematic level for now (no layout or extracted parasitics).
 
@@ -166,12 +166,12 @@ Other corners can be run by changing `tt` to `ss` or `ff` on the `.lib` line.
 
 ## References
 
-1. L. Chang et al., "An 8T-SRAM for variability tolerance and low-voltage operation in high-performance caches," IEEE JSSC, vol. 43, no. 4, 2008.
-2. Amogh K M and Sunita M S, "A Novel 8T SRAM-Based In-Memory Computing Architecture for MAC-Derived Logical Functions," arXiv:2512.00441, 2025.
-3. A. Agrawal et al., "X-SRAM: Enabling in-memory Boolean computations in CMOS static random access memories," IEEE TCAS-I, 2018.
-4. B. Razavi, "The StrongARM latch," IEEE Solid-State Circuits Magazine, vol. 7, no. 2, 2015.
-5. T. Kobayashi et al., "A current-controlled latch sense amplifier and a static power-saving input buffer for low-power architecture," IEEE JSSC, 1993.
-6. B. Nikolić et al., "Improved sense-amplifier-based flip-flop: Design and measurements," IEEE JSSC, vol. 35, no. 6, 2000.
-7. D. Johns and K. Martin, Analog Integrated Circuit Design, Wiley (chapter on flash A/D converters).
-8. J. Li, A. S. Rakin, Z. He, D. Fan and C. Chakrabarti, "RADAR: Run-time adversarial weight attack detection and accuracy recovery," DATE, 2021.
-9. A. S. Rakin, Z. He and D. Fan, "Bit-flip attack: Crushing neural network with progressive bit search," ICCV, 2019.
+1. J. Li, A. S. Rakin, Z. He, D. Fan and C. Chakrabarti, "RADAR: Run-time adversarial weight attack detection and accuracy recovery," DATE, 2021.
+2. A. S. Rakin, Z. He and D. Fan, "Bit-flip attack: Crushing neural network with progressive bit search," ICCV, 2019.
+3. L. Chang et al., "An 8T-SRAM for variability tolerance and low-voltage operation in high-performance caches," IEEE JSSC, vol. 43, no. 4, 2008.
+4. Amogh K M and Sunita M S, "A Novel 8T SRAM-Based In-Memory Computing Architecture for MAC-Derived Logical Functions," arXiv:2512.00441, 2025.
+5. A. Agrawal et al., "X-SRAM: Enabling in-memory Boolean computations in CMOS static random access memories," IEEE TCAS-I, 2018.
+6. B. Razavi, "The StrongARM latch," IEEE Solid-State Circuits Magazine, vol. 7, no. 2, 2015.
+7. T. Kobayashi et al., "A current-controlled latch sense amplifier and a static power-saving input buffer for low-power architecture," IEEE JSSC, 1993.
+8. B. Nikolić et al., "Improved sense-amplifier-based flip-flop: Design and measurements," IEEE JSSC, vol. 35, no. 6, 2000.
+9. D. Johns and K. Martin, Analog Integrated Circuit Design, Wiley (chapter on flash A/D converters).
