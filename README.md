@@ -1,6 +1,8 @@
-# In-Situ Weight-Integrity Checking on an 8T SRAM Compute-in-Memory Array (SkyWater 130 nm)
+# CIMtegrity
 
-This is an ongoing project in which I am designing an 8T SRAM compute-in-memory (CIM) array at the transistor level in the open-source SkyWater 130 nm PDK, using Xschem and ngspice.
+**In-situ weight-integrity checking on an 8T SRAM compute-in-memory array (SkyWater 130 nm)**
+
+CIMtegrity is an ongoing project in which I am designing an 8T SRAM compute-in-memory (CIM) array at the transistor level in the open-source SkyWater 130 nm PDK, using Xschem and ngspice.
 
 ## Goal
 
@@ -74,6 +76,7 @@ Process corners (the full logic unit):
 - The precharge pfet was too weak at first and took 1.45 ns to restore the bitline. Widening it from 1 µm to 2 µm brought this down to 0.71 ns.
 - I originally planned to detect the levels with skewed inverters, as X-SRAM does [3]. With levels this close to VDD (about 1.6 V for the upper threshold), an inverter cannot be skewed far enough in sky130, so I switched to clocked StrongARM comparators [4, 5]. Because a StrongARM resets every cycle, I added an SR latch after each one, as in sense-amplifier flip-flops [6].
 - While re-running everything for this README, the two-row testbench gave levels that no longer matched my earlier run. The cause was the second cell's ground pin, which had been left on an unconnected net. Its read path had nothing to discharge into.
+
 ---
 
 ## Phase 1.5: 4×4 multi-row MAC
@@ -128,6 +131,7 @@ Single column, written and read with six patterns:
 
 - The first full-column run read count 1 as count 0. Probing the first comparator showed that it was deciding the wrong way: the bitline was at about 1.50 V against a 1.673 V reference, yet the wrong output fell. Both comparator outputs were sagging to around 0.95 V before one of them recovered, which meant the regeneration was weak, and the SR latch, still holding the previous result, loaded the two outputs unequally. Doubling the width of the comparator's pfet latch pair (1 µm to 2 µm) fixed it. I then re-ran the Phase 1 logic unit at TT with the new comparator and it still passed.
 - When the comparators fire, every bitline steps down by about 60 mV (kickback onto the floating 200 fF bitline). It does not cause errors here, but it eats into the margin and will matter if the levels get closer together.
+
 ---
 
 ## Design details
