@@ -64,11 +64,11 @@ Process corners (the full logic unit):
 | TT | correct |
 | FF | correct |
 
-![Bitcell write and read](results/step2_bitcell_all.png)
+![Bitcell write and read](results/sram_cell_all.png)
 
-![Two-row RBL levels](results/step3_column_rbl.png)
+![Two-row RBL levels](results/sram_2cell_rbl.png)
 
-![Logic unit output, TT](results/step5_cim_logic_tt.png)
+![Logic unit output, TT](results/cim_loigc_tt.png)
 
 ### Problems I ran into
 
@@ -123,7 +123,7 @@ Single column, written and read with six patterns:
 | 3 | 1110 | 011 |
 | 4 | 1111 | 100 |
 
-![Five RBL levels](results/col4_rbl_levels.png)
+![Five RBL levels](results/single_col_4cell_rbl.png)
 
 ![4×4 array, four bitlines during one read](results/cim_array4x4_rbl.png)
 
@@ -151,15 +151,16 @@ Drivers and reference voltages are ideal sources, and everything is at schematic
 ## Files
 
 ```
-*.sch, *.sym    Xschem schematics and symbols
-spice/          netlists exported from Xschem
+schematics/     Xschem schematics (.sch)
+symbols/        Xschem symbols (.sym)
+netlist/        netlists exported from Xschem
 results/        ngspice logs and waveform screenshots
 ```
 
 Requires the sky130A PDK (open_pdks), Xschem and ngspice. To run a testbench in batch mode:
 
 ```
-ngspice -b spice/cim_col4_tb.spice
+ngspice -b netlist/cim_col_4_tb.spice
 ```
 
 Other corners can be run by changing `tt` to `ss` or `ff` on the `.lib` line.
