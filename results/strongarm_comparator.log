@@ -1,0 +1,60 @@
+Using SPARSE 1.3 as Direct Linear Solver
+
+Note: No compatibility mode selected!
+
+
+Circuit: ** sch_path: <my_path>/strongarm_tb.sch
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+Initial Transient Solution
+--------------------------
+
+Node                                   Voltage
+----                                   -------
+xh.net1                                1.66659
+clk                                          0
+xh.net3                                    1.8
+rbl                                        1.8
+xh.net2                                    1.8
+vrefh                                     1.61
+outnh                                      1.8
+outph                                      1.8
+vdd                                        1.8
+xl.net1                                1.66643
+xl.net3                                    1.8
+xl.net2                                    1.8
+vrefl                                     1.24
+outnl                                      1.8
+outpl                                      1.8
+v5#branch                                    0
+v4#branch                                    0
+v3#branch                                    0
+v2#branch                                    0
+v1#branch                         -4.22862e-12
+
+ Reference value :  0.00000e+00
+No. of Data Rows : 2928
+h0                  =  1.800000e+00
+h1                  =  1.800000e+00
+h2                  =  4.799369e-07
+h3                  =  4.849681e-07
+h4                  =  4.593093e-07
+h5                  =  4.790756e-07
+h6                  =  1.211206e-06
+l0                  =  1.800000e+00
+l1                  =  1.800000e+00
+l2                  =  1.800000e+00
+l3                  =  1.800000e+00
+l4                  =  1.800000e+00
+l5                  =  5.229742e-07
+l6                  =  1.161180e-06
+
+Warning: command 'plot' is not available during batch simulation, ignored!
+    You may use Gnuplot instead.
+
+td_h                =  4.049210e-11 targ=  4.565492e-09 trig=  4.525000e-09
+
+The file "step4_comp.svg" has the Scalable Vector Graphics format.
+Note: Simulation executed from .control section 

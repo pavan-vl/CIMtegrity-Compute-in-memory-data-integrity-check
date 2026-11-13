@@ -1,0 +1,33 @@
+Using SPARSE 1.3 as Direct Linear Solver
+
+Note: No compatibility mode selected!
+
+
+Circuit: ** sch_path: <my_path>/sram_2cell_col_tb.sch
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  5.00000e-14
+ Reference value :  6.08750e-09
+ Reference value :  2.52505e-08
+Warning: command 'plot' is not available during batch simulation, ignored!
+    You may use Gnuplot instead.
+
+
+Warning: command 'plot' is not available during batch simulation, ignored!
+    You may use Gnuplot instead.
+
+
+No. of Data Rows : 8223
+v00                 =  1.804349e+00
+v10                 =  1.423014e+00
+v01                 =  1.419634e+00
+v11                 =  1.050520e+00
+mhigh = 3.813350e-01
+mlow = 3.724940e-01
+
+The file "step3_all.svg" has the Scalable Vector Graphics format.
+
+The file "step3_rbl.svg" has the Scalable Vector Graphics format.
+Note: Simulation executed from .control section 

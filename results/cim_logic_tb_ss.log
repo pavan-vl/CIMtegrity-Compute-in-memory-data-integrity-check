@@ -1,0 +1,53 @@
+Using SPARSE 1.3 as Direct Linear Solver
+
+Note: No compatibility mode selected!
+
+
+Circuit: ** sch_path: <my_path>/cim_logic_tb.sch
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using transient initial conditions
+ Reference value :  5.00000e-14
+ Reference value :  2.28250e-09
+ Reference value :  5.55250e-09
+ Reference value :  5.94250e-09
+ Reference value :  6.00750e-09
+ Reference value :  9.50250e-09
+ Reference value :  1.15875e-08
+ Reference value :  1.28275e-08
+ Reference value :  1.60425e-08
+ Reference value :  2.02975e-08
+ Reference value :  2.11525e-08
+ Reference value :  2.29675e-08
+ Reference value :  2.36475e-08
+ Reference value :  2.44175e-08
+ Reference value :  2.59075e-08
+ Reference value :  2.83425e-08
+ Reference value :  3.14575e-08
+ Reference value :  3.51975e-08
+ Reference value :  3.88925e-08
+Warning: command 'plot' is not available during batch simulation, ignored!
+    You may use Gnuplot instead.
+
+
+No. of Data Rows : 8248
+v00                 =  1.804525e+00
+v10                 =  1.548633e+00
+v01                 =  1.545249e+00
+v11                 =  1.292628e+00
+and0                =  1.696137e-06
+and1                =  8.699713e-07
+and2                =  5.852450e-07
+and3                =  4.391947e-07
+nor0                =  1.799912e+00
+nor1                =  1.799982e+00
+nor2                =  1.799990e+00
+nor3                =  1.589592e-08
+xor0                =  1.239019e-08
+xor1                =  8.350057e-09
+xor2                =  8.349707e-09
+xor3                =  1.800000e+00
+
+The file "step5_cim_logic.svg" has the Scalable Vector Graphics format.
+Note: Simulation executed from .control section 
