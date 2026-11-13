@@ -1,0 +1,63 @@
+** sch_path: /home/paaji/Sky130_prj/sram_8t_bitcell_tb.sch
+**.subckt sram_8t_bitcell_tb
+x1 VDD WL BL BLb RWL 0 RBL sram_8t_bitcell
+V1 VDD 0 1.8
+V2 WL 0 PWL(0 0 2n 0 2.05n 1.8 4n 1.8 4.05n 0 9n 0 9.05n 1.8 11n 1.8 11.05n 0)
+V3 BL 0 PWL(0 0 1n 0 1.05n 1.8 7n 1.8 7.05n 0)
+V4 BLb 0 PWL(0 1.8 1n 1.8 1.05n 0 7n 0 7.05n 1.8)
+V5 PREB 0 PWL(0 0 5n 0 5.05n 1.8 6.5n 1.8 6.55n 0 12n 0 12.05n 1.8 13.5n 1.8 13.55n 0)
+V6 RWL 0 PWL(0 0 5.2n 0 5.25n 1.8 5.9n 1.8 5.95n 0 12.2n 0 12.25n 1.8 12.9n 1.8 12.95n 0)
+XM1 RBL PREB VDD VDD sky130_fd_pr__pfet_01v8 L=0.15 W=2 nf=1 ad=0.58 as=0.58 pd=4.58 ps=4.58 nrd=0.145 nrs=0.145 sa=0 sb=0 sd=0
++ mult=1
+C1 RBL 0 200f
+**** begin user architecture code
+
+.lib /usr/local/share/pdk/sky130A/libs.tech/ngspice/sky130.lib.spice tt
+.ic v(x1.q)=0 v(x1.qb)=1.8 v(rbl)=1.8
+.tran 5p 15n uic
+.control
+run
+meas tran tw1 TRIG v(wl) VAL=0.9 RISE=1 TARG v(x1.q) VAL=1.62 RISE=1
+meas tran tw0 TRIG v(wl) VAL=0.9 RISE=2 TARG v(x1.q) VAL=0.18 FALL=1 TD=8n
+meas tran vrbl_r1 FIND v(rbl) AT=5.9n
+meas tran vrbl_r0 FIND v(rbl) AT=12.9n
+meas tran qmin_r1 MIN v(x1.q) FROM=5.2n TO=6n
+meas tran tpre TRIG v(preb) VAL=0.9 FALL=1 TD=6n TARG v(rbl) VAL=1.75 RISE=1 TD=6n
+plot v(wl)+10 v(bl)+8 v(x1.q)+6 v(x1.qb)+4 v(rwl)+2 v(rbl)
+plot v(rbl)
+.endc
+
+
+**** end user architecture code
+**.ends
+
+* expanding   symbol:  sram_8t_bitcell.sym # of pins=7
+** sym_path: /home/paaji/Sky130_prj/sram_8t_bitcell.sym
+** sch_path: /home/paaji/Sky130_prj/sram_8t_bitcell.sch
+.subckt sram_8t_bitcell VDD WL BL BLb RWL VSS RBL
+*.iopin VDD
+*.ipin WL
+*.ipin BL
+*.ipin RWL
+*.ipin BLb
+*.iopin RBL
+*.iopin VSS
+XM3 Qb Q VSS VSS sky130_fd_pr__nfet_01v8 L=0.15 W=0.84 nf=1 ad=0.2436 as=0.2436 pd=2.26 ps=2.26 nrd=0.345238095238095
++ nrs=0.345238095238095 sa=0 sb=0 sd=0 mult=1
+XM1 Q Qb VSS VSS sky130_fd_pr__nfet_01v8 L=0.15 W=0.84 nf=1 ad=0.2436 as=0.2436 pd=2.26 ps=2.26 nrd=0.345238095238095
++ nrs=0.345238095238095 sa=0 sb=0 sd=0 mult=1
+XM2 Qb Q VDD VDD sky130_fd_pr__pfet_01v8 L=0.15 W=0.42 nf=1 ad=0.1218 as=0.1218 pd=1.42 ps=1.42 nrd=0.69047619047619
++ nrs=0.69047619047619 sa=0 sb=0 sd=0 mult=1
+XM4 Q Qb VDD VDD sky130_fd_pr__pfet_01v8 L=0.15 W=0.42 nf=1 ad=0.1218 as=0.1218 pd=1.42 ps=1.42 nrd=0.69047619047619
++ nrs=0.69047619047619 sa=0 sb=0 sd=0 mult=1
+XM5 Q WL BL VSS sky130_fd_pr__nfet_01v8 L=0.15 W=0.42 nf=1 ad=0.1218 as=0.1218 pd=1.42 ps=1.42 nrd=0.69047619047619
++ nrs=0.69047619047619 sa=0 sb=0 sd=0 mult=1
+XM6 BLb WL Qb VSS sky130_fd_pr__nfet_01v8 L=0.15 W=0.42 nf=1 ad=0.1218 as=0.1218 pd=1.42 ps=1.42 nrd=0.69047619047619
++ nrs=0.69047619047619 sa=0 sb=0 sd=0 mult=1
+XM7 net1 Q VSS VSS sky130_fd_pr__nfet_01v8 L=0.15 W=0.42 nf=1 ad=0.1218 as=0.1218 pd=1.42 ps=1.42 nrd=0.69047619047619
++ nrs=0.69047619047619 sa=0 sb=0 sd=0 mult=1
+XM8 RBL RWL net1 VSS sky130_fd_pr__nfet_01v8 L=0.15 W=0.42 nf=1 ad=0.1218 as=0.1218 pd=1.42 ps=1.42 nrd=0.69047619047619
++ nrs=0.69047619047619 sa=0 sb=0 sd=0 mult=1
+.ends
+
+.end

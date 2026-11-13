@@ -1,0 +1,270 @@
+** sch_path: /home/paaji/Sky130_prj/cim_array4x4_tb.sch
+**.subckt cim_array4x4_tb
+xc1 VDD WLOFF RWL WLOFF PREB RWL WLOFF RWL WLOFF RWL 0 VDD VDD SAE VREF1 C1_B0 VREF2 C1_B1 VREF3 C1_B2 VREF4 cim_column
+xc2 VDD WLOFF RWL WLOFF PREB RWL WLOFF RWL WLOFF RWL 0 VDD VDD SAE VREF1 C2_B0 VREF2 C2_B1 VREF3 C2_B2 VREF4 cim_column
+xc3 VDD WLOFF RWL WLOFF PREB RWL WLOFF RWL WLOFF RWL 0 VDD VDD SAE VREF1 C3_B0 VREF2 C3_B1 VREF3 C3_B2 VREF4 cim_column
+xc4 VDD WLOFF RWL WLOFF PREB RWL WLOFF RWL WLOFF RWL 0 VDD VDD SAE VREF1 C4_B0 VREF2 C4_B1 VREF3 C4_B2 VREF4 cim_column
+V1 VDD 0 1.8
+V2 WLOFF 0 0
+V3 VREF1 0 1.673
+V4 VREF2 0 1.430
+V5 VREF3 0 1.188
+V6 VREF4 0 0.952
+V7 RWL 0 PULSE(0 1.8 5.2n 50p 50p 0.4n 20n)
+V8 PREB 0 PULSE(0 1.8 5n 50p 50p 1.45n 20n)
+V9 SAE 0 PULSE(0 1.8 5.75n 50p 50p 0.45n 20n)
+**** begin user architecture code
+
+
+.lib /usr/local/share/pdk/sky130A/libs.tech/ngspice/sky130.lib.spice tt
+.ic v(xc1.xcol.x1.q)=1.8 v(xc1.xcol.x1.qb)=0 v(xc1.xcol.x2.q)=0 v(xc1.xcol.x2.qb)=1.8 v(xc1.xcol.x3.q)=0 v(xc1.xcol.x3.qb)=1.8 v(xc1.xcol.x4.q)=0 v(xc1.xcol.x4.qb)=1.8 v(xc2.xcol.x1.q)=1.8 v(xc2.xcol.x1.qb)=0 v(xc2.xcol.x2.q)=1.8 v(xc2.xcol.x2.qb)=0 v(xc2.xcol.x3.q)=0 v(xc2.xcol.x3.qb)=1.8 v(xc2.xcol.x4.q)=0 v(xc2.xcol.x4.qb)=1.8 v(xc3.xcol.x1.q)=1.8 v(xc3.xcol.x1.qb)=0 v(xc3.xcol.x2.q)=1.8 v(xc3.xcol.x2.qb)=0 v(xc3.xcol.x3.q)=1.8 v(xc3.xcol.x3.qb)=0 v(xc3.xcol.x4.q)=0 v(xc3.xcol.x4.qb)=1.8 v(xc4.xcol.x1.q)=1.8 v(xc4.xcol.x1.qb)=0 v(xc4.xcol.x2.q)=1.8 v(xc4.xcol.x2.qb)=0 v(xc4.xcol.x3.q)=1.8 v(xc4.xcol.x3.qb)=0 v(xc4.xcol.x4.q)=1.8 v(xc4.xcol.x4.qb)=0
+.tran 5p 10n uic
+.control
+run
+meas tran c1_b2 FIND v(c1_b2) AT=9n
+meas tran c1_b1 FIND v(c1_b1) AT=9n
+meas tran c1_b0 FIND v(c1_b0) AT=9n
+meas tran c2_b2 FIND v(c2_b2) AT=9n
+meas tran c2_b1 FIND v(c2_b1) AT=9n
+meas tran c2_b0 FIND v(c2_b0) AT=9n
+meas tran c3_b2 FIND v(c3_b2) AT=9n
+meas tran c3_b1 FIND v(c3_b1) AT=9n
+meas tran c3_b0 FIND v(c3_b0) AT=9n
+meas tran c4_b2 FIND v(c4_b2) AT=9n
+meas tran c4_b1 FIND v(c4_b1) AT=9n
+meas tran c4_b0 FIND v(c4_b0) AT=9n
+plot v(xc1.rbl) v(xc2.rbl) v(xc3.rbl) v(xc4.rbl)
+.endc
+
+
+**** end user architecture code
+**.ends
+
+* expanding   symbol:  cim_column.sym # of pins=21
+** sym_path: /home/paaji/Sky130_prj/cim_column.sym
+** sch_path: /home/paaji/Sky130_prj/cim_column.sch
+.subckt cim_column VDD WL1 RWL1 WL2 PREB RWL2 WL3 RWL3 WL4 RWL4 VSS BL BLb SAE VREF1 B0 VREF2 B1 VREF3 B2 VREF4
+*.iopin VDD
+*.iopin VSS
+*.ipin WL1
+*.ipin RWL1
+*.ipin WL2
+*.ipin RWL2
+*.ipin WL3
+*.ipin RWL3
+*.ipin WL4
+*.ipin RWL4
+*.ipin BL
+*.ipin BLb
+*.ipin PREB
+*.ipin SAE
+*.ipin VREF1
+*.ipin VREF2
+*.ipin VREF3
+*.ipin VREF4
+*.opin B0
+*.opin B1
+*.opin B2
+xcol WL1 VDD BL BLb RBL RWL1 WL2 RWL2 WL3 RWL3 WL4 RWL4 VSS single_col_4cell
+XM1 RBL PREB VDD VDD sky130_fd_pr__pfet_01v8 L=0.15 W=2 nf=1 ad=0.58 as=0.58 pd=4.58 ps=4.58 nrd=0.145 nrs=0.145 sa=0 sb=0 sd=0
++ mult=1
+C1 RBL VSS 200f
+xs VDD SAE VREF1 VREF3 VREF2 RBL VREF4 NT4 net1 net2 net3 NT2 VSS T1 T2 T3 sense4
+xt VDD T3 T1 T2 NT4 NT2 VSS B0 B1 B2 therm_to_bin
+.ends
+
+
+* expanding   symbol:  single_col_4cell.sym # of pins=13
+** sym_path: /home/paaji/Sky130_prj/single_col_4cell.sym
+** sch_path: /home/paaji/Sky130_prj/single_col_4cell.sch
+.subckt single_col_4cell WL1 VDD BL BLb RBL RWL1 WL2 RWL2 WL3 RWL3 WL4 RWL4 VSS
+*.ipin RWL4
+*.ipin WL4
+*.ipin WL3
+*.ipin RWL3
+*.ipin WL2
+*.ipin RWL2
+*.ipin WL1
+*.ipin RWL1
+*.ipin BL
+*.ipin BLb
+*.iopin VDD
+*.iopin RBL
+*.iopin VSS
+x1 VDD WL1 BL BLb RWL1 VSS RBL sram_8t_bitcell
+x2 VDD WL2 BL BLb RWL2 VSS RBL sram_8t_bitcell
+x3 VDD WL3 BL BLb RWL3 VSS RBL sram_8t_bitcell
+x4 VDD WL4 BL BLb RWL4 VSS RBL sram_8t_bitcell
+.ends
+
+
+* expanding   symbol:  sense4.sym # of pins=16
+** sym_path: /home/paaji/Sky130_prj/sense4.sym
+** sch_path: /home/paaji/Sky130_prj/sense4.sch
+.subckt sense4 VDD SAE VREF1 VREF3 VREF2 RBL VREF4 NT4 T4 NT1 NT3 NT2 VSS T1 T2 T3
+*.ipin SAE
+*.ipin RBL
+*.ipin VREF1
+*.ipin VREF2
+*.ipin VREF3
+*.ipin VREF4
+*.iopin VDD
+*.iopin VSS
+*.opin T1
+*.opin NT1
+*.opin NT2
+*.opin T2
+*.opin T3
+*.opin NT3
+*.opin T4
+*.opin NT4
+xs1 VDD SAE ON1 OP1 VREF1 RBL VSS strongarm
+xs2 VDD SAE ON2 OP2 VREF2 RBL VSS strongarm
+xs3 VDD SAE ON3 OP3 VREF3 RBL VSS strongarm
+xs4 VDD SAE ON4 OP4 VREF4 RBL VSS strongarm
+xl1 VDD ON1 NT1 T1 OP1 VSS sr_latch
+xl2 VDD ON2 NT2 T2 OP2 VSS sr_latch
+xl3 VDD ON3 NT3 T3 OP3 VSS sr_latch
+xl4 VDD ON4 NT4 T4 OP4 VSS sr_latch
+.ends
+
+
+* expanding   symbol:  therm_to_bin.sym # of pins=10
+** sym_path: /home/paaji/Sky130_prj/therm_to_bin.sym
+** sch_path: /home/paaji/Sky130_prj/therm_to_bin.sch
+.subckt therm_to_bin VDD T3 T1 T2 NT4 NT2 VSS B0 B1 B2
+*.ipin T1
+*.ipin NT2
+*.ipin T3
+*.ipin NT4
+*.opin B0
+*.ipin T2
+*.iopin VDD
+*.iopin VSS
+*.opin B2
+*.opin B1
+xa VDD T1 N1 NT2 VSS nand2
+xb VDD T3 N2 NT4 VSS nand2
+xc VDD N1 B0 N2 VSS nand2
+xd VDD T2 N3 NT4 VSS nand2
+xf VDD NT4 B2 VSS inv
+x2 VDD N3 B1 VSS inv
+.ends
+
+
+* expanding   symbol:  sram_8t_bitcell.sym # of pins=7
+** sym_path: /home/paaji/Sky130_prj/sram_8t_bitcell.sym
+** sch_path: /home/paaji/Sky130_prj/sram_8t_bitcell.sch
+.subckt sram_8t_bitcell VDD WL BL BLb RWL VSS RBL
+*.iopin VDD
+*.ipin WL
+*.ipin BL
+*.ipin RWL
+*.ipin BLb
+*.iopin RBL
+*.iopin VSS
+XM3 Qb Q VSS VSS sky130_fd_pr__nfet_01v8 L=0.15 W=0.84 nf=1 ad=0.2436 as=0.2436 pd=2.26 ps=2.26 nrd=0.345238095238095
++ nrs=0.345238095238095 sa=0 sb=0 sd=0 mult=1
+XM1 Q Qb VSS VSS sky130_fd_pr__nfet_01v8 L=0.15 W=0.84 nf=1 ad=0.2436 as=0.2436 pd=2.26 ps=2.26 nrd=0.345238095238095
++ nrs=0.345238095238095 sa=0 sb=0 sd=0 mult=1
+XM2 Qb Q VDD VDD sky130_fd_pr__pfet_01v8 L=0.15 W=0.42 nf=1 ad=0.1218 as=0.1218 pd=1.42 ps=1.42 nrd=0.69047619047619
++ nrs=0.69047619047619 sa=0 sb=0 sd=0 mult=1
+XM4 Q Qb VDD VDD sky130_fd_pr__pfet_01v8 L=0.15 W=0.42 nf=1 ad=0.1218 as=0.1218 pd=1.42 ps=1.42 nrd=0.69047619047619
++ nrs=0.69047619047619 sa=0 sb=0 sd=0 mult=1
+XM5 Q WL BL VSS sky130_fd_pr__nfet_01v8 L=0.15 W=0.42 nf=1 ad=0.1218 as=0.1218 pd=1.42 ps=1.42 nrd=0.69047619047619
++ nrs=0.69047619047619 sa=0 sb=0 sd=0 mult=1
+XM6 BLb WL Qb VSS sky130_fd_pr__nfet_01v8 L=0.15 W=0.42 nf=1 ad=0.1218 as=0.1218 pd=1.42 ps=1.42 nrd=0.69047619047619
++ nrs=0.69047619047619 sa=0 sb=0 sd=0 mult=1
+XM7 net1 Q VSS VSS sky130_fd_pr__nfet_01v8 L=0.15 W=0.42 nf=1 ad=0.1218 as=0.1218 pd=1.42 ps=1.42 nrd=0.69047619047619
++ nrs=0.69047619047619 sa=0 sb=0 sd=0 mult=1
+XM8 RBL RWL net1 VSS sky130_fd_pr__nfet_01v8 L=0.15 W=0.42 nf=1 ad=0.1218 as=0.1218 pd=1.42 ps=1.42 nrd=0.69047619047619
++ nrs=0.69047619047619 sa=0 sb=0 sd=0 mult=1
+.ends
+
+
+* expanding   symbol:  strongarm.sym # of pins=7
+** sym_path: /home/paaji/Sky130_prj/strongarm.sym
+** sch_path: /home/paaji/Sky130_prj/strongarm.sch
+.subckt strongarm VDD CLK OUTN OUTP INN INP VSS
+*.ipin CLK
+*.ipin INP
+*.ipin INN
+*.opin OUTP
+*.opin OUTN
+*.iopin VSS
+*.iopin VDD
+XM7 net1 CLK VSS VSS sky130_fd_pr__nfet_01v8 L=0.15 W=2 nf=1 ad=0.58 as=0.58 pd=4.58 ps=4.58 nrd=0.145 nrs=0.145 sa=0 sb=0 sd=0
++ mult=1
+XM1 net3 INP net1 net1 sky130_fd_pr__nfet_01v8 L=0.15 W=2 nf=1 ad=0.58 as=0.58 pd=4.58 ps=4.58 nrd=0.145 nrs=0.145 sa=0 sb=0 sd=0
++ mult=1
+XM2 net2 INN net1 net1 sky130_fd_pr__nfet_01v8 L=0.15 W=2 nf=1 ad=0.58 as=0.58 pd=4.58 ps=4.58 nrd=0.145 nrs=0.145 sa=0 sb=0 sd=0
++ mult=1
+XM3 OUTN OUTP net3 net3 sky130_fd_pr__nfet_01v8 L=0.15 W=1 nf=1 ad=0.29 as=0.29 pd=2.58 ps=2.58 nrd=0.29 nrs=0.29 sa=0 sb=0 sd=0
++ mult=1
+XM4 OUTP OUTN net2 net2 sky130_fd_pr__nfet_01v8 L=0.15 W=1 nf=1 ad=0.29 as=0.29 pd=2.58 ps=2.58 nrd=0.29 nrs=0.29 sa=0 sb=0 sd=0
++ mult=1
+XM5 OUTN OUTP VDD VDD sky130_fd_pr__pfet_01v8 L=0.15 W=2 nf=1 ad=0.58 as=0.58 pd=4.58 ps=4.58 nrd=0.145 nrs=0.145 sa=0 sb=0 sd=0
++ mult=1
+XM6 OUTP OUTN VDD VDD sky130_fd_pr__pfet_01v8 L=0.15 W=2 nf=1 ad=0.58 as=0.58 pd=4.58 ps=4.58 nrd=0.145 nrs=0.145 sa=0 sb=0 sd=0
++ mult=1
+XMS3 OUTN CLK VDD VDD sky130_fd_pr__pfet_01v8 L=0.15 W=0.42 nf=1 ad=0.1218 as=0.1218 pd=1.42 ps=1.42 nrd=0.69047619047619
++ nrs=0.69047619047619 sa=0 sb=0 sd=0 mult=1
+XMS1 net3 CLK VDD VDD sky130_fd_pr__pfet_01v8 L=0.15 W=0.42 nf=1 ad=0.1218 as=0.1218 pd=1.42 ps=1.42 nrd=0.69047619047619
++ nrs=0.69047619047619 sa=0 sb=0 sd=0 mult=1
+XMS4 OUTP CLK VDD VDD sky130_fd_pr__pfet_01v8 L=0.15 W=0.42 nf=1 ad=0.1218 as=0.1218 pd=1.42 ps=1.42 nrd=0.69047619047619
++ nrs=0.69047619047619 sa=0 sb=0 sd=0 mult=1
+XMS2 net2 CLK VDD VDD sky130_fd_pr__pfet_01v8 L=0.15 W=0.42 nf=1 ad=0.1218 as=0.1218 pd=1.42 ps=1.42 nrd=0.69047619047619
++ nrs=0.69047619047619 sa=0 sb=0 sd=0 mult=1
+.ends
+
+
+* expanding   symbol:  sr_latch.sym # of pins=6
+** sym_path: /home/paaji/Sky130_prj/sr_latch.sym
+** sch_path: /home/paaji/Sky130_prj/sr_latch.sch
+.subckt sr_latch VDD SB Q QB RB VSS
+*.iopin VDD
+*.iopin VSS
+*.ipin SB
+*.ipin RB
+*.opin Q
+*.opin QB
+xn1 VDD SB Q QB VSS nand2
+xn2 VDD Q QB RB VSS nand2
+.ends
+
+
+* expanding   symbol:  nand2.sym # of pins=5
+** sym_path: /home/paaji/Sky130_prj/nand2.sym
+** sch_path: /home/paaji/Sky130_prj/nand2.sch
+.subckt nand2 VDD A Y B VSS
+*.ipin A
+*.ipin B
+*.opin Y
+*.iopin VDD
+*.iopin VSS
+XM1 net1 B VSS VSS sky130_fd_pr__nfet_01v8 L=0.15 W=0.84 nf=1 ad=0.2436 as=0.2436 pd=2.26 ps=2.26 nrd=0.345238095238095
++ nrs=0.345238095238095 sa=0 sb=0 sd=0 mult=1
+XM2 Y B VDD VDD sky130_fd_pr__pfet_01v8 L=0.15 W=0.84 nf=1 ad=0.2436 as=0.2436 pd=2.26 ps=2.26 nrd=0.345238095238095
++ nrs=0.345238095238095 sa=0 sb=0 sd=0 mult=1
+XM3 Y A VDD VDD sky130_fd_pr__pfet_01v8 L=0.15 W=0.84 nf=1 ad=0.2436 as=0.2436 pd=2.26 ps=2.26 nrd=0.345238095238095
++ nrs=0.345238095238095 sa=0 sb=0 sd=0 mult=1
+XM4 Y A net1 net1 sky130_fd_pr__nfet_01v8 L=0.15 W=0.84 nf=1 ad=0.2436 as=0.2436 pd=2.26 ps=2.26 nrd=0.345238095238095
++ nrs=0.345238095238095 sa=0 sb=0 sd=0 mult=1
+.ends
+
+
+* expanding   symbol:  inv.sym # of pins=4
+** sym_path: /home/paaji/Sky130_prj/inv.sym
+** sch_path: /home/paaji/Sky130_prj/inv.sch
+.subckt inv VDD A Y VSS
+*.ipin A
+*.opin Y
+*.iopin VDD
+*.iopin VSS
+XM1 Y A VSS VSS sky130_fd_pr__nfet_01v8 L=0.15 W=0.42 nf=1 ad=0.1218 as=0.1218 pd=1.42 ps=1.42 nrd=0.69047619047619
++ nrs=0.69047619047619 sa=0 sb=0 sd=0 mult=1
+XM2 Y A VDD VDD sky130_fd_pr__pfet_01v8 L=0.15 W=0.84 nf=1 ad=0.2436 as=0.2436 pd=2.26 ps=2.26 nrd=0.345238095238095
++ nrs=0.345238095238095 sa=0 sb=0 sd=0 mult=1
+.ends
+
+.end

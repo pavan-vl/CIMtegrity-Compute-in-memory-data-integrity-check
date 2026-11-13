@@ -1,0 +1,32 @@
+** sch_path: /home/paaji/Sky130_prj/sr_latch.sch
+**.subckt sr_latch VDD SB Q QB RB VSS
+*.iopin VDD
+*.iopin VSS
+*.ipin SB
+*.ipin RB
+*.opin Q
+*.opin QB
+xn1 VDD SB Q QB VSS nand2
+xn2 VDD Q QB RB VSS nand2
+**.ends
+
+* expanding   symbol:  nand2.sym # of pins=5
+** sym_path: /home/paaji/Sky130_prj/nand2.sym
+** sch_path: /home/paaji/Sky130_prj/nand2.sch
+.subckt nand2 VDD A Y B VSS
+*.ipin A
+*.ipin B
+*.opin Y
+*.iopin VDD
+*.iopin VSS
+XM1 net1 B VSS VSS sky130_fd_pr__nfet_01v8 L=0.15 W=0.84 nf=1 ad=0.2436 as=0.2436 pd=2.26 ps=2.26 nrd=0.345238095238095
++ nrs=0.345238095238095 sa=0 sb=0 sd=0 mult=1
+XM2 Y B VDD VDD sky130_fd_pr__pfet_01v8 L=0.15 W=0.84 nf=1 ad=0.2436 as=0.2436 pd=2.26 ps=2.26 nrd=0.345238095238095
++ nrs=0.345238095238095 sa=0 sb=0 sd=0 mult=1
+XM3 Y A VDD VDD sky130_fd_pr__pfet_01v8 L=0.15 W=0.84 nf=1 ad=0.2436 as=0.2436 pd=2.26 ps=2.26 nrd=0.345238095238095
++ nrs=0.345238095238095 sa=0 sb=0 sd=0 mult=1
+XM4 Y A net1 net1 sky130_fd_pr__nfet_01v8 L=0.15 W=0.84 nf=1 ad=0.2436 as=0.2436 pd=2.26 ps=2.26 nrd=0.345238095238095
++ nrs=0.345238095238095 sa=0 sb=0 sd=0 mult=1
+.ends
+
+.end
